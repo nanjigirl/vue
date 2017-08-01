@@ -1,0 +1,166 @@
+<!DOCTYPE html>  
+<html>  
+  <head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples   
+      on iOS devices-->  
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">  
+    <title>Feature Layer - display results as an InfoWindow onHover</title>  
+  
+    <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.8/3.8/js/dojo/dijit/themes/claro/claro.css">  
+    <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.8/3.8/js/dojo/dijit/themes/tundra/tundra.css">  
+    <link rel="stylesheet" href="http://localhost/arcgis_js_api/library/3.8/3.8/js/esri/css/esri.css">  
+    <style>  
+      html, body, #mapDiv   
+      {  
+        padding:0;  
+        margin:0;  
+        height:100%;  
+        font-size:10px;  
+        position: relative;  
+      }  
+      #infowin  
+      {         
+          display:none;  
+          z-index:10000;        
+      }  
+      #close  
+      {  
+          float:right;  
+          padding-top:10px;  
+          font-weight:bold;  
+          font-size:12px;  
+          color:#FFF;  
+          border:#000 1px solid;  
+          height:20px;  
+          width:20px;  
+          text-align:center;  
+      }  
+       #close:hover  
+      {  
+          cursor:pointer;  
+      }  
+      #title  
+      {  
+          background-color:#666;  
+          padding:10px;  
+          font-weight:bold;  
+          font-size:12px;  
+      }  
+      #content  
+      {  
+          padding-left:10px;  
+          padding-top:10px;  
+          background-color:#999;  
+          height:200px;  
+      }  
+      #arrow  
+      {  
+          background-image:url(arrow.png);  
+          height:30px;  
+      }  
+    </style>      
+    <script src="http://js.arcgis.com/3.9/"></script>  
+    <script>  
+      var dmap,infowin,colse,title,content;     
+      var width=400,height=230,offset=50;       
+        
+      var closeInfoWin = function (evt){  
+          infowin=document.getElementById("infowin");  
+          infowin.style.display="none";  
+      };   
+  
+      require([  
+        "esri/map", //地图  
+        "esri/layers/ArcGISTiledMapServiceLayer",  
+        "esri/layers/FeatureLayer",//特征层  
+        "esri/symbols/PictureMarkerSymbol",//图片点符号  
+        "esri/renderers/SimpleRenderer", //简单渲染  
+        "esri/graphic", //图片  
+        "esri/lang",               
+        "dojo/domReady!"  
+      ], function(  
+        Map,ArcGISTiledMapServiceLayer,FeatureLayer,PictureMarkerSymbol,SimpleRenderer,esriLang  
+      ) {  
+        var beforePoint;   
+        var beforeMapPoint;   
+          
+        var map = new Map("mapDiv", {  
+          logo:false,  
+          center: [106.6854, 35.8364],  
+          zoom: 4,  
+          slider: true  
+        });   
+          
+        var shpServiceURL="**************************************";  
+        var shpTitlelayer=new ArcGISTiledMapServiceLayer(shpServiceURL);  
+        map.addLayer(shpTitlelayer);  
+  
+        //--------------------------------------------------------------------------------------------------------  
+        var featurelayercity = new FeatureLayer("**************************************************", {  
+          mode: FeatureLayer.MODE_SNAPSHOT,  
+          outFields: ["*"]  
+        });  
+        var pmsRed = new PictureMarkerSymbol('../images/location_icon_blue.png', 20, 20).setOffset(0, 15);  
+        //简单渲染  
+        var sr=new SimpleRenderer(pmsRed);  
+        featurelayercity.setRenderer(sr);         
+        map.addLayer(featurelayercity);   
+          
+        dmap=document.getElementById("mapDiv");  
+        infowin = document.getElementById("infowin");  
+        colse = document.getElementById("close");  
+        title = document.getElementById("title");  
+        content = document.getElementById("content");  
+          
+        function showinfowindow(x,y){  
+            infowin.style.left=(x-width/2)+"px";  
+            infowin.style.top=(y-height-offset)+"px";   
+            infowin.style.position="absolute";  
+            infowin.style.width=width+"px";  
+            infowin.style.height=height+"px";  
+            infowin.style.display="block";    
+        };  
+          
+        function leftClick(evt){  
+            infowin.style.display="none";             
+            var strtitle="城市名称"           
+            var strcontent = "****是一座美丽的城市<br><br>****是一座好看的城市<br><br>****是一座富饶的城市<br><br>****是一座漂亮的城市";                      
+            title.innerHTML = strtitle;  
+            content.innerHTML = strcontent;  
+            var screenpoint = map.toScreen(evt.mapPoint);  
+            beforeMapPoint = evt.mapPoint;  
+            beforePoint=screenpoint;  
+            showinfowindow(screenpoint.x,screenpoint.y);  
+        }  
+        //鼠标单击  
+        featurelayercity.on("click", leftClick);      
+          
+        map.on("pan",function(pan){  
+          var movePoint=pan.delta;  
+          showinfowindow((beforePoint.x+movePoint.x),(beforePoint.y+movePoint.y))  
+       })           
+        map.on("pan-end",function(panend){  
+          var movedelta=panend.delta;  
+          beforePoint.x=beforePoint.x+movedelta.x;  
+          beforePoint.y=beforePoint.y+movedelta.y;  
+       })  
+        map.on("zoom-end",function(){  
+          var zoomPoint = map.toScreen(beforeMapPoint);  
+          showinfowindow(zoomPoint.x,zoomPoint.y);  
+          beforePoint=zoomPoint;  
+       })         
+      });  
+    </script>  
+  </head>  
+  <body class="tundra">  
+    <div id="mapDiv">  
+        <div id="infowin">  
+            <div id="close" onClick="closeInfoWin()">X</div>  
+            <div id="title"></div>  
+            <div id="content"></div>  
+            <div id="arrow"></div>  
+        </div>  
+    </div>  
+  </body>  
+</html>  

@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>template</title>		
+</head>
+<body>
+<template id='child'>
+	<div>
+		<h3>我是子组件</h3>
+		<input type="button" value="按钮" @click="change">
+		<strong>{{msg.a}}</strong>
+		<strong>{{b}}</strong>
+	</div>
+</template>
+<div id="box">	
+	父级 ---> {{giveData.a}}
+	<child-com :msg="giveData"></child-com>
+</div>
+<script type="text/javascript" src="../lib/vue.js"></script>
+<script type="text/javascript">	
+	window.onload=function(){
+		new Vue({
+			el:'#box',
+			data:{
+				giveData:{
+					a:'我是父组件'
+				}
+			},
+			components:{
+				'child-com':{
+					data(){
+						return{
+							b:''
+						}
+					},
+					props:['msg'],
+					template:'#child',
+					mounted(){
+						this.b = this.msg
+					},
+					methods:{
+						change(){
+							this.msg.a = '被更改了'
+						}
+					}
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

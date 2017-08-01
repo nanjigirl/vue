@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue模板</title>
+	<script src="bower_components/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="box">
+	<input type="button" @click="a='aaa'" value="aaa">
+	<input type="button" @click="a='bbb'" value="bbb">
+	<component :is="a"></component>
+</div>
+<script>
+	window.onload = function(){	
+		new Vue({
+			el:'#box',			
+			data:{
+				a:'aaa'
+			},
+			components:{
+				'aaa':{
+					template:'<h2>我是aaa</h2>'
+				},
+				'bbb':{
+					template:'<h2>我是bbb</h2>'
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

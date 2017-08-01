@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>echart百分比自适应</title>
+	<style type="text/css">
+		html,body{
+			width:100%;
+			height:100%;
+		}
+		
+.dashBoard{
+    width:100%;
+    height:14em;
+}
+.leftBoard,.middleBoard,.rightBoard{
+    float: left;
+}
+.leftBoard,.rightBoard{
+    width:var(--weather-box-width);
+    height:100%;
+    background: #fff;
+}
+.middleBoard{
+    width:var(--weather-graph-width);
+    height:inherit;
+    float: right;
+    /*background: -webkit-linear-gradient(#2d7bb2, #65a7d6, #91caf2); /* Safari 5.1 - 6.0 */
+    /*background: -o-linear-gradient(#2d7bb2, #65a7d6, #91caf2); /* Opera 11.1 - 12.0 */
+    /*background: -moz-linear-gradient(#2d7bb2, #65a7d6, #91caf2); /* Firefox 3.6 - 15 */
+    /*background: linear-gradient(#2d7bb2, #65a7d6, #91caf2); /* 标准的语法 */
+}
+.ylChart{
+    width:117em;
+    height:inherit;
+}
+.alarmImg,.weather,.monitorChart{
+    width:100%;
+    height:15em;
+}
+.alarmImg{
+    border-radius:5px;
+    background: url("../../css/images/alarmImg.png") no-repeat center center;
+    background-size:100% 100%;
+}
+.monitorList{
+    width:100%;
+    height:calc(100% - 30em);
+}
+.listTitle{
+    width:100%;
+    height: 3em;
+    border-radius:5px;
+    background: #076ea8;
+    line-height:3em;
+    color:#fff;
+    text-align: center;
+}
+.listTable{
+    width:100%;
+    height:calc(100% - 3em);
+    overflow-y: auto;
+}
+.listChart-l,.listChart-r{
+    width: 100%;
+    height: 100%;
+}
+.dashBoard-bottom{
+    width:100%;
+    height: 22em;
+    background: #fff;
+    position: absolute;
+    bottom:0;
+    overflow:hidden;
+    z-index: 10;
+}
+.weatherBox{
+    width: var(--weather-box-width);
+    height: inherit;
+    float: left;
+}
+.weatherTitle h2{
+    color:#333;
+    display: inline-block;
+    margin: 0 10px;
+    line-height: 1.5em;
+    text-indent: -2em;
+}
+.weatherContent{
+    width:100%;
+    height:inherit;
+}
+.imgContent{
+    width: inherit;
+    height: inherit;
+    background: url(../../css/images/weatherImg.png) center 25% no-repeat;
+    background-size: 100% 205%;
+}
+.yj-text-title{
+    display:inline-block;
+    vertical-align: middle;
+}
+.yjTxt{
+    color:orange;
+    margin-left:30px;
+}
+.yjImg{
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    background: url("../../css/images/yellow-alarm.png") center center no-repeat;
+    background-size:100% 100%;
+    vertical-align: middle;
+}
+.chartFix{
+    height: 87% !important;
+}
+.titleFix{
+    height: 36px;
+    border-top: 0 !important;
+    padding-top: 5px;
+    color: #519cba;
+}
+.chartFix .listChart{
+    width: 54.5em !important;
+    height: 14.7em !important;
+}
+.monitorData-item{
+    width:50%;
+    height:40%;
+    border-right:1px solid #ccc;
+}
+.monitorData-title{
+    text-align: center;
+    border-top: 1px solid #519cba;
+    border-bottom: 1px solid #519cba;
+}
+.layoutLR-item .monitorData-title{
+    background: #31a9d0;
+}
+.introduction{
+    border-top: 1px solid #519cba;
+    padding:5px 0;
+    text-align: center;
+    color: #519cba;
+    font-weight: bold;
+}
+.title-logo{
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px 10px;
+}
+.title-jsd{
+    background: url("../../css/images/waterLevel.png") center center no-repeat;
+    background-size:100% 100%;
+}
+.title-sz{
+    background: url("../../css/images/waterQuality.png") center center no-repeat;
+    background-size:100% 100%;
+}
+.title-chart{
+    background: url("../../css/images/chart.png") center center no-repeat;
+    background-size:100% 100%;
+}
+.title-txt{
+    font-size:1em;
+    vertical-align: middle;
+    color: #519cba;
+}
+.layoutLR-item .title-txt{
+    color: #fff;
+}
+.monitorData-content{
+    width: 100%;
+    height: 100%;
+}
+.monitorData-contentL,.monitorData-contentR{
+    width: 100%;
+    height: 100%;
+    border-right:1px solid #ccc;
+}
+.monitorData-contentR{
+    border:none;
+}
+.dashBoard-bottom th,.dashBoard-bottom td{
+    text-align: center;
+}
+@-webkit-keyframes twinkling {
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+.dashBoard-bottom td{
+    line-height:1.8em;
+}
+.dashBoard-bottom td>.icon{
+    font-size:1.8em;
+    color:#D72E29;
+    -webkit-animation:twinkling 1s infinite;
+}
+.displayArea-bottom .monitorData-item{
+    width:22.5%;
+}
+.displayArea-bottom .monitorData-contentL{
+    width:100%;
+}
+.displayArea-bottom .introduction-item{
+    width:10%;
+}
+.displayArea-bottom .container-item{
+    width:46%;
+}
+.displayArea-bottom .childContainer-item{
+    width:33.3%;
+}
+.displayArea-bottom .childContainer-item .listChart{
+    width:23.2em;
+}
+.displayArea-bottom .childContainer-itemhd{
+    width:18%;
+}
+.displayArea-bottom .childContainer-itemgd{
+    width:36%;
+}
+.displayArea-bottom .childContainer-itemgd .listChart{
+    width:31.5em;
+}
+.displayArea-bottom .childContainer-item .monitorData-title{
+    border-top:none;
+}
+.displayArea-bottom .icon-txt{
+    font-size:25px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.listChart{
+    width: 17.2em;
+    height:16em;
+    margin:auto;
+}
+.listChart-h{
+    height:18em;
+}
+.txtInfo{
+    margin: 10% 0;
+    padding: 0 10%;
+}
+.txtInfo>li{
+    padding:10px 0;
+}
+.dashBoard-left,.dashBoard-right{
+    width:35em;
+    height:calc(100% - 18em);
+    top:calc(5% + 14em);
+}
+.dashBoard-left{
+    z-index: 99;
+    left:0;
+    width:var(--weather-box-width);
+}
+.dashBoard-right{
+    right:0;
+    width:var(--weather-box-width);
+}
+.layoutLR-item{
+    width:100%;
+}
+.layoutLR-bottom-item{
+    height:60%;
+}
+.romanClass:after{
+    display:inline-block;
+    width:2em;
+    height:2em;
+    line-height:2em;
+    border-radius:1em;
+    text-align: center;
+    font-style: normal;
+    color: #fff;
+}
+.class1:after{
+    content:'I';
+    background: #11c5fa;
+}
+.class2:after{
+    content:'II';
+    background: #13a9f0;
+}
+.class3:after{
+    content:'III';
+    background: #60d41c;
+}
+.class4:after{
+    content:'IV';
+    background: #20b660;
+}
+.class5:after{
+     content:'V';
+     background: #fec109;
+ }
+.class6:after{
+    content:'劣V';
+    background: #fc5304;
+}
+.normalRun{
+    color:green;
+}
+	</style>	
+</head>
+<body>
+<script type="text/javascript" src="../lib/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/echarts.min.js"></script>
+
+<div class="dashBoard-bottom dashBoard-left">
+	<div class="monitorData-item layoutLR-item">
+		<div class="monitorData-title">
+			<span class="title-logo title-jsd"></span>
+			<span class="title-txt">积水点水位</span>
+		</div> 
+		<div class="monitorData-content">
+			<div class="monitorData-contentL">
+				<div class="listTable">
+					<table class="table table-bordered">
+						<thead><tr><th>名称</th> <th>积水深度</th> <th>行政区</th> <th>报警灯</th></tr></thead> <tbody><tr><td>天寿路广深铁路桥底</td> <td>1.02m</td> <td>天河区</td> <td><i class="icon iconfont"></i></td></tr> <tr><td>天源路长湴地铁站对出路段</td> <td>0.31m</td> <td>天河区</td> <td><span class="normalRun">正常</span></td></tr> <tr><td>员村二横路南段</td> <td>0.27m</td> <td>天河区</td> <td><span class="normalRun">正常</span></td></tr> <tr><td>下西关片区</td> <td>0.38m</td> <td>荔湾区</td> <td><span class="normalRun">正常</span></td></tr> <tr><td>开发大道(夏园)立交</td> <td>0.23m</td> <td>黄埔区</td> <td><span class="normalRun">正常</span></td></tr> <tr><td>茅岗立交</td> <td>1.3m</td> <td>黄埔区</td> <td><i class="icon iconfont"></i></td></tr> <tr><td>棠涌涵洞</td> <td>0.31</td> <td>白云区</td> <td><span class="normalRun">正常</span></td></tr> <tr><td>童心路铁路桥底(含黄华路)</td> <td>0.21</td> <td>越秀区</td> <td><span class="normalRun">正常</span></td></tr> <tr><td>民主直街</td> <td>1.02m</td> <td>海珠区</td> <td><i class="icon iconfont"></i></td></tr> <tr><td>江燕路</td> <td>0.12m</td> <td>海珠区</td> <td><span class="normalRun">正常</span></td></tr></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="monitorData-item layoutLR-item layoutLR-bottom-item">
+		<div class="monitorData-title">
+			<span class="title-logo title-chart"></span>
+			<span class="title-txt">报警统计</span>
+		</div> 
+		<div class="monitorData-content">
+			<div class="monitorData-contentL">
+				<div class="listChart-l"></div>
+			</div>
+		</div>
+	</div>
+</div>	
+<script type="text/javascript">
+	var myChart1 = echarts.init($(".listChart-l")[0]);
+	var option = {
+		    color: ['#3398DB'],
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        }
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis : [
+		        {
+		            type : 'category',
+		            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+		            axisTick: {
+		                alignWithLabel: true
+		            }
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value'
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'直接访问',
+		            type:'bar',
+		            barWidth: '60%',
+		            data:[10, 52, 200, 334, 390, 330, 220]
+		        }
+		    ]
+		};
+		myChart1.setOption(option);	
+</script>
+</body>
+</html>

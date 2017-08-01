@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue组件</title>
+	<script src="bower_components/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="box">
+	<my-aaa></my-aaa>
+</div>
+<script>
+	window.onload = function(){
+		//全局组件
+		// var template = Vue.extend({
+		// 	data(){
+		// 		return{
+		// 			msg:'我是标题^^'
+		// 		}
+		// 	},
+		// 	methods:{
+		// 		change(){
+		// 			alert(2);
+		// 		}
+		// 	},
+		// 	template:'<h3 @click="change">{{msg}}</h3>'
+		// });
+		// Vue.component('aaa',template);
+
+
+		// Vue.component('aaa',{
+		// 	template:'<h3>我是标题</h3>'
+		// })
+
+
+		//局部组件
+		// var template = Vue.extend({
+		// 	template:'<h3>{{msg}}</h3>',
+		// 	data(){
+		// 		return{
+		// 			msg:'ddd'
+		// 		}
+		// 	},
+
+		// })
+
+		//另一种方式
+		// Vue.component('my-aaa',{
+		// 	template:'<strong>好</strong>'
+		// })
+
+
+		new Vue({
+			el:'#box',			
+			components:{
+				'my-aaa':{
+					data(){
+						return{
+							msg:'welcom'
+						}
+					},
+					methods:{
+						changed(){
+							this.msg='changed'
+						}
+					},
+					template:'<h2 @click="changed">标题2->{{msg}}</h2>'
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

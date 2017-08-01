@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id="example">
+	<my-example></my-example>
+</div>
+<script type="text/javascript" src="../lib/vue.js"></script>
+<script type="text/javascript">
+	/*在组件内使用vm.$nextTick()比较方便，不需要全局Vue,并且回调函数中this自动绑定到当前Vue*/
+
+	//注册组件
+	Vue.component('my-example',{
+		template:'<span v-on:click="updateMessage">{{ message }}</span>',
+		data:function(){
+			return{
+				message:'not updated'
+			}
+		},
+		methods:{
+			updateMessage:function(){			
+				this.message = 'updated';
+				console.log(this.$el.textContent);//没有更新
+				this.$nextTick(function(){
+					console.log(this.$el.textContent);//更新
+				})
+			}
+		}
+	})
+	//创建根实例
+	new Vue({
+		el:'#example',
+		data:{
+			message:''
+		}
+	})
+</script>
+</body>
+</html>

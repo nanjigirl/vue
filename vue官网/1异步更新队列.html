@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id="example">{{message}}
+</div>
+<script type="text/javascript" src="../lib/vue.js"></script>
+<script type="text/javascript">
+/*vue异步更新队列原理：给数据设置新的data时，组件不会立即重新渲染，在下一个队列时才会更新，如果需要在数据更新时立即调用方法，可使用Vue.nextTick(callback),毁掉函数在DOM更新完成后就会调用*/
+	var vm = new Vue({
+		el:'#example',
+		data:{
+			message:'123'
+		}
+	})
+	vm.message = 'new message'//更改数据
+	if(vm.$el.textContent === 'new message'){
+		console.log("true");
+	}else{
+		console.log("false");
+	}//false
+	Vue.nextTick(function(){
+		if(vm.$el.textContent === 'new message'){
+			console.log("true");
+		}else{
+			console.log("false");
+		}//true
+	})
+	/*在组件内使用vm.$nextTick()比较方便，不需要全局Vue,并且回调函数中this自动绑定到当前Vue*/
+	Vue.component('example',{
+		template:'<span @click="updateMessage">{{ message }}</span>',
+		data:function(){
+			return{
+				massage:'not updated'
+			}
+		},
+		methods:{
+			updateMessage:function(){
+				this.message = 'updated'
+				console.log(this.$el.textContent)//没有更新
+				this.$nextTick(function(){
+					console.log(this.$el.textContent)//更新完成
+				})
+			}
+		}
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<style type="text/css">
+		/*.trapezoid{
+			width: 100px;
+			height: 100px;
+			background: #efefef;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,0.5);
+		}
+		.trapezoid:after,.trapezoid:before{
+			content: "";
+		    display: block;
+		    width: 20px;
+		    height: 50px;
+		    background: skyblue;
+		    position: relative;
+		    top: 50%;
+		    left: 100%;		    		   
+		}
+		.trapezoid:after{
+			box-shadow: 1px 7px 5px 0 rgba(0,0,0,.5);
+    		transform: translate(0 , -130%) skew(0,-40deg);
+		}
+		.trapezoid:before{
+			box-shadow: 1px 7px 5px 0 rgba(0,0,0,.5);
+			transform: translate(0 , -50%) skew(0,40deg);
+		}*/
+		/*带边框平行四边形*/
+		.trapezoid {
+		    width: 2.5em;
+		    height: 10em;
+		    background: #eee;
+		    text-align: center;
+		    position: absolute;
+		    top: 50%;		   
+		    border-left: 1px solid #ccc;
+		    transform: translate(3%,-50%);
+		}
+		.trapezoid:after,.trapezoid:before{
+		    content: "";
+		    display: block;
+		    width: inherit;
+		    height: 50%;
+		    background: inherit;
+		    position: relative;
+		}
+		.trapezoid:before{
+		    bottom: -62%;
+		    transform: skewY(45deg);
+		    border-bottom: 1px solid #ccc;
+		}
+		.trapezoid:after{
+		    top: -83%;
+		    transform: skewY(-45deg);
+		    border-top: 1px solid #ccc;
+		}
+
+		.trapezoid:hover {
+		    color: #519AB7 !important;
+		}
+
+		.trapezoid > a {
+		    color: #666 !important;
+		    font-size: 1.5em;
+		    position:relative;
+		    top:-0.75em;
+		    text-decoration: none;
+		}
+		/*带阴影平行四边形*/
+		.goBack {
+		    width: 2.5em;
+		    height: 10em;
+		    background: #f4f4f4;
+		    text-align: center;
+		    position: absolute;	
+		    top: 10em;	    		    
+		    box-shadow: -5px 0 10px -1px rgba(0,0,0,.2);		   
+		}
+		.goBack:after,.goBack:before{
+		    content: "";
+		    display: block;
+		    width: inherit;
+		    height: 5em;
+		    background: #f4f4f4;
+		    position: relative;
+		}
+		.goBack:before{
+		    bottom: -60%;
+		    transform: skewY(45deg);
+		    box-shadow: -5px 10px 10px -1px rgba(0,0,0,.2);
+		}
+		.goBack:after{
+		    top: -75%;
+		    transform: skewY(-45deg);
+		    box-shadow: -5px -10px 10px -1px rgba(0,0,0,.2);
+		}
+
+		.goBack:hover {
+		    color: #519AB7 !important;
+		}
+
+		.goBack > a {
+		    color: #666 !important;
+		    font-size: 1.5em;
+		    position:relative;
+		    top:-0.2em;
+		    text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="trapezoid">
+		<a href='#' class="el-icon-d-arrow-right">>></a>
+	</div>
+	<!-- <div class="goBack">
+		<a href='#' class="el-icon-d-arrow-right">>></a>
+	</div> -->
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue-resource</title>	
+	<script type="text/javascript" src="../lib/vue.js"></script>
+	<script type="text/javascript" src="../lib/vue-resource.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			new Vue({
+				el:'#box',
+				data:{
+				},
+				methods:{
+					//普通文件
+					// get:function(){
+					// 	this.$http.get('a.txt').then(function(res){
+					// 		alert('成功了');
+					// 		alert(res.data);
+					// 	},function(res){
+					// 		alert(res.status);
+					// 	})
+					// }
+					//get请求
+					get:function(){
+						this.$http.get('get.php',{
+							a:1,
+							b:2
+						}).then(function(res){						
+							alert(res.data);
+						},function(res){
+							alert(res.status);
+						});
+					}
+					//post请求
+					// get:function(){
+					// 	this.$http.post('post.php',{
+					// 		a:1,
+					// 		b:20
+					// 	},{
+					// 		emulateJSON:true
+					// 	}).then(function(res){						
+					// 		alert(res.data);
+					// 	},function(res){
+					// 		alert(res.status);
+					// 	})
+					// }
+					//jsonP
+					// https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=&json=1&p=3&sid=1441_21089_18559_17001_22919_20930&req=2&csor=0&cb=jQuery1102030864430619583816_1497240246064&_=1497240246065
+					// get:function(){
+					// 	this.$http.josnP('post.php',{
+					// 		a:1,
+					// 		b:20
+					// 	},{
+					// 		emulateJSON:true
+					// 	}).then(function(res){						
+					// 		alert(res.data);
+					// 	},function(res){
+					// 		alert(res.status);
+					// 	})
+					//}
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<div id="box">	
+		<input type="button" value="button" @click="get()">
+	</div>
+</body>
+</html>

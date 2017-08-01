@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue-resource</title>	
+	<script type="text/javascript" src="../lib/vue.js"></script>
+	<script type="text/javascript" src="../lib/vue-resource.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			new Vue({
+				el:'#box',
+				data:{
+				},
+				methods:{
+					//普通文件
+					// get:function(){
+					// 	this.$http.get('a.txt').then(function(res){
+					// 		alert('成功了');
+					// 		alert(res.data);
+					// 	},function(res){
+					// 		alert(res.status);
+					// 	})
+					// }								
+					//jsonP					
+					//360链接：https://sug.so.360.cn/suggest?callback=suggest_so&word=a
+					/*get:function(){
+						this.$http.jsonp('https://sug.so.360.cn/suggest',{
+							word:'a'
+						}).then(function(res){						
+							alert(res.data.s);
+						},function(res){
+							alert(res.status);
+						})
+					}*/
+					//百度数据:https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=jQuery1102023188055627586523_1497250268623&_=1497250268626
+					get:function(){
+						this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+							wd:'a'
+						},{
+							jsonp:'cb'	//callback名字，默认名字为callback
+						}).then(function(res){						
+							alert(res.data.s);
+						},function(res){
+							alert(res.status);
+						})
+					}
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<div id="box">	
+		<input type="button" value="button" @click="get()">
+	</div>
+</body>
+</html>

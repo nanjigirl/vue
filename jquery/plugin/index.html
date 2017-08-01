@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jquery插件</title>
+	<script type="text/javascript" src="../../lib/jquery.min.js"></script>
+	<script type="text/javascript" src="array_option.js"></script>
+	<script type="text/javascript">
+		//添加一个全局函数
+		// jQuery.myFunction = function(){
+		// 	console.log("Hello World");
+		// }
+		// jQuery.myFunction1 = function(msg){
+		// 	console.log(msg);
+		// }
+		jQuery.extend({
+			myFunction:function(){
+				console.log("Hello World");
+			},
+			myFunction1:function(msg){
+				console.log(msg);
+			}
+		});
+		$(document).ready(function(){
+			$.myFunction();//调用全局函数
+			$.myFunction1("Today is Thursday");
+
+			$.array_option.myFunction();//调用插件
+			$.array_option.myFunction1("my array_option");
+
+			//数组求和
+			var array = [1,2,3,4,5];
+			$.sum.arraySum(array);
+
+			var array2 = [23,42,2,34,64,232];
+			var sum = $.sum.sum(array2);
+			console.log(sum);
+		})
+	</script>
+</head>
+<body>
+
+</body>
+</html>

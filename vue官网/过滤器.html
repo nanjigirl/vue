@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>template</title>		
+</head>
+<body>
+<div id="demo">
+ 	{{msg | toDou('12','5')}}
+</div>
+<script type="text/javascript" src="../lib/vue.js"></script>
+<script type="text/javascript">
+	Vue.filter('toDou',function(n,a,b){
+		alert(a+','+b);
+		return n<10?'0'+n:''+n;		
+	})
+	window.onload=function(){
+		new Vue({
+			el:'#demo',
+			data:{
+				msg:9
+			}
+		})
+	}
+</script>
+</body>
+</html>
